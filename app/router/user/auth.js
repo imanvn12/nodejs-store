@@ -10,7 +10,7 @@ const router = require('express').Router();
 
 /**
  * @swagger
- *  /user/login:
+ *  /user/register:
  *      post:
  *          tags: [authorization user]
  *          summary: login user to userpanel with phone number
@@ -20,7 +20,7 @@ const router = require('express').Router();
  *              description: IR phone number 
  *              in: formData
  *              required: true
- *              type: String 
+ *              type: string 
  *          responses:
  *              200:
  *                  description: success
