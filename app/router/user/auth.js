@@ -18,7 +18,7 @@ const router = require('express').Router();
  *          parameters:
  *          -   name: phone
  *              description: IR phone number 
- *              in: Form data
+ *              in: formData
  *              required: true
  *              type: String 
  *          responses:
