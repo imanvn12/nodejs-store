@@ -1,0 +1,16 @@
+###get otp
+POST  http://localhost:4000/user/register
+Content-Type: application/json
+
+{
+    "phone": "09015239224"
+}
+
+###check otp
+POST  http://localhost:4000/user/checkotp
+Content-Type: application/json
+
+{
+    "phone": "09015239224",
+    "code": "47118.93210839813"
+}
