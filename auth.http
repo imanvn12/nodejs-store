@@ -14,3 +14,11 @@ Content-Type: application/json
     "phone": "09015239224",
     "code": "97623.4435465691"
 }
+
+###create category
+POST  http://localhost:4000/categories/create
+Content-Type: application/json
+
+{
+    "title": "test category2"
+}

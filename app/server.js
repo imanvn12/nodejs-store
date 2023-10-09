@@ -27,24 +27,64 @@ module.exports = class Application {
         this.#app.use(express.json());
         this.#app.use(express.urlencoded({ extended: true }));
         this.#app.use(express.static(path.join(__dirname, '..', 'public')));
+        // this.#app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerJSDoc({
+        //     swaggerDefinition: {
+        //         openapi: "3.0.0",
+        //         info: {
+        //             title: 'great store',
+        //             version: '3.0.0',
+        //             description: 'the best store',
+        //             contact: {
+        //                 name: 'imanvn',
+        //                 email: 'valylyaniman56@gmail.com',
+        //                 url: 'http://imanvn.com'
+        //             }
+        //         },
+        //         servers: [
+        //             { url: 'http://localhost:4000' }
+        //         ],
+        //         components: {
+        //             securitySchemes: {
+        //                 BearerAuth: {
+        //                     type: 'http',
+        //                     scheme: 'bearer',
+        //                     bearerFormat: 'JWT'
+        //                 }
+        //             }
+        //         },
+        //         security: [{ BearerAuth: [] }]
+        //     },
+        //     apis: ["./app/router/**/*.js"],
+
+        // }), { explorer: true }))
+
         this.#app.use('/api-doc', swaggerUI.serve, swaggerUI.setup(swaggerJSDoc({
             swaggerDefinition: {
+                openapi: '3.0.0',
                 info: {
                     title: 'great store',
-                    version: '1.0.0',
+                    version: '3.0.0',
                     description: 'the best store',
                     contact: {
-                        name: 'imanvn',
-                        email: 'valylyaniman56@gmail.com',
-                        url: 'http://imanvn.com'
+                        name: 'iman vn',
+                        email: 'vakylyaniman56@gmail.com',
+                        url: 'google.com'
                     }
                 },
-                servers: {
-                    url: 'http://localhost:4000'
-                }
+                servers: [{ url: "http://localhost:4000" }],
+                components: {
+                    securitySchemes: {
+                        BearerAuth: {
+                            type: 'http',
+                            scheme: 'bearer',
+                            bearerFormat: 'JWT'
+                        }
+                    }
+                },
+                security: [{ BearerAuth: [] }]
             },
-            apis: ["./app/router/**/*.js"]
-        })))
+            apis: ['./app/router/**/*.js']
+        }), { explorer: true }))
     }
 
     createServer() {
@@ -83,10 +123,10 @@ module.exports = class Application {
         })
         this.#app.use((err, req, res, next) => {
             const internalError = createHttpError.InternalServerError();
-            const statusCode = err.statusCode || internalError.status;
+            const statuscode = err.statusCode || internalError.statusCode;
             const message = err.message || internalError.message;
-            return res.status(statusCode).json({
-                statusCode,
+            return res.status(statuscode).json({
+                statuscode,
                 message
             })
         })

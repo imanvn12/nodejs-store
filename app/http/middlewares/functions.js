@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken');
 const { userModel } = require('../../model/users');
 const crypto = require('crypto');
 const { SECRET_KEY } = require('../../utils/SECRET_KEYS.JS');
+const path = require('path');
+const fs = require('fs');
 
 function randomNumber() {
     return ((Math.random(Math.floor()) * 90000) + 10000)
@@ -32,9 +34,31 @@ function findAccessToken(phoneOfUser) {
 }
 
 
+function deleteFile(file){
+    const pathfile = path.join(__dirname, '..', '..', '..', 'public', file);
+    fs.unlinkSync(pathfile);
+}
+
+
+function stringToArray(value) {
+    value = value.trim().split(',');
+
+
+}
+
+function arrayImages(files, imagepath) {
+    if(files?.length > 0) {
+        return (files.map(files => path.join( ''+ imagepath, files?.filename )))
+    } else {
+        return []
+    }
+}
 
 
 module.exports = {
     randomNumber,
-    findAccessToken
+    findAccessToken,
+    deleteFile,
+    stringToArray,
+    arrayImages
 }

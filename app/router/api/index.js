@@ -12,7 +12,7 @@ const router = require('express').Router();
 
 /**
  * @swagger
- * /:
+ * / :
  *  get:
  *      summary: index page
  *      tags: [index page]
@@ -24,7 +24,7 @@ const router = require('express').Router();
  *              description: not found
  */
 
-router.get('/', verifyAccessToken, homeControllers.indexPage);
+router.get('/', homeControllers.indexPage);
 
 module.exports = {
     apiRouter: router
