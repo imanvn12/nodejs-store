@@ -42,6 +42,33 @@
  *                  shortdescription:
  *                      type: string
  *                      description: shortdescription of the course
+ *                  category:
+ *                      type: string
+ *                      description: shortdescription of the course
+ *                  description:
+ *                      type: string
+ *                      description: description of the course
+ *                  image:
+ *                      type: string
+ *                      format: binary 
+ *                      description: image of the course
+ *                  type:
+ *                      $ref: '#/components/schemas/listtype'
+ *                  tags:
+ *                      type: array
+ *                      description: tags of the course
+ *          updatecourse:
+ *              type: object
+ *              properties:
+ *                  title:
+ *                      type: string
+ *                      description: title of the course
+ *                  shortdescription:
+ *                      type: string
+ *                      description: shortdescription of the course
+ *                  category:
+ *                      type: string
+ *                      description: shortdescription of the course
  *                  description:
  *                      type: string
  *                      description: description of the course
@@ -106,10 +133,6 @@
  *                              type: string
  *                              description: type of course
  *                              example: "not started"
- *                          time:
- *                              type: string
- *                              description: time of course
- *                              example: "00:00:00"
  */
 
 /**
@@ -170,4 +193,31 @@
  *                          schema:
  *                              $ref: '#/definitions/createlist'
  */
+
+
+/**
+ * @swagger
+ *  /admin/course/update/{id}:
+ *      patch:
+ *          summary: update a course
+ *          tags: [course(admin panel)]
+ *          parameters:
+ *              -   in: path
+ *                  name: id
+ *                  type: string
+ *          requestBody:
+ *              content:
+ *                  multipart/form-data:
+ *                      schema:
+ *                          $ref: "#/components/schemas/updatecourse"
+ *          responses:
+ *              201:
+ *                  description: success
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              $ref: '#/definitions/createresponse'
+ */
+
+
 

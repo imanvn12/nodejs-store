@@ -3,9 +3,10 @@ const { default: mongoose } = require('mongoose');
 const path = require('path');
 const swaggerUI = require('swagger-ui-express');
 const swaggerJSDoc = require('swagger-jsdoc');
-const { allRoutes } = require('./router/routes');
 const morgan = require('morgan');
 const createHttpError = require('http-errors');
+require('dotenv').config();
+const { allRoutes } = require('./router/routes');
 // hiii
 module.exports = class Application {
     #app = express();

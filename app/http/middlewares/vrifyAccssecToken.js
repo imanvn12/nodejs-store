@@ -3,6 +3,7 @@ const { userModel } = require('../../model/users');
 const { SECRET_KEY } = require('../../utils/SECRET_KEYS.JS');
 const createHttpError = require('http-errors');
 
+
 async function verifyAccessToken(req, res, next) {
     try {
         const headers = req.headers || req.header;
@@ -24,19 +25,30 @@ async function verifyAccessToken(req, res, next) {
     }
 }
 
-function checkRole(role) {
-    return function (req, res, next) {
-        try {
-            const user = req.user;
-            if (!user.roles.includes(role)) throw createHttpError.Forbidden('you can not access to this page');
-            return next()
-        } catch (error) {
-            next(error)
+
+async function verifyAccessTokenInGraphql(req) {
+    try {
+        const headers = req.headers || req.header;
+        const [bearer, token] = headers?.authorization?.split(' ') || [];
+        if (token && ['bearer', 'Bearer'].includes(bearer)) {
+
+            const { phone } = jwt.verify(token, SECRET_KEY);
+
+            const user = await userModel.findOne({ phone });
+            if (!user) throw new createHttpError.Unauthorized('nashod');
+
+            return user
+        } else {
+            throw new createHttpError.Unauthorized('bro to accontet')
         }
+    } catch (error) {
+        throw new createHttpError.Unauthorized()
     }
 }
 
+
+
 module.exports = {
     verifyAccessToken,
-    checkRole
+    verifyAccessTokenInGraphql
 }

@@ -4,7 +4,6 @@ const Schema = new mongoose.Schema({
         title: {type: String, required: true},
         parents: {type: mongoose.Types.ObjectId, default: undefined}
 },{
-    _id: false,
     toJSON: {
         virtuals: true
     }

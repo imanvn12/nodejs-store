@@ -1,0 +1,9 @@
+{
+  products {
+    _id
+    title
+    shortdescription
+    description
+    imags
+  }
+}

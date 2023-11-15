@@ -1,0 +1,34 @@
+{
+  courses {
+    _id
+    title
+    shortdescription
+    description
+    image
+    price
+    type
+    format
+    imageurl
+    totaltime
+    teacher {
+      _id
+      phone
+      email
+      first_name
+      last_name
+    }
+    chapters {
+      _id
+      title
+      text
+      episodes {
+        _id
+        title
+        text
+        video
+        type
+        videoaddress
+      }
+    }
+  }
+}
