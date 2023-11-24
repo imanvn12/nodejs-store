@@ -32,6 +32,7 @@ const userSchema = new mongoose.Schema({
     phone: { type: String, required: true },
     email: { type: String },
     password: { type: String },
+    token: { type: String, default: "" },
     otp: { type: Object, default: { code: 0, expiresIn: 0 } },
     bills: { type: [], default: [] },
     discount: { type: Number, default: 0 },

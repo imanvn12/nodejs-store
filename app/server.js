@@ -7,6 +7,13 @@ const morgan = require('morgan');
 const createHttpError = require('http-errors');
 require('dotenv').config();
 const { allRoutes } = require('./router/routes');
+const expressEjsLayouts = require('express-ejs-layouts');
+const { initialaysSocket } = require('./utils/initSocket');
+const { socketHandler } = require('./Socket.io');
+const cookieParser = require('cookie-parser');
+const session = require('express-session');
+const { COOKIE_PARSER_SECET_KEY } = require('./utils/SECRET_KEYS.JS');
+const { cookieHelper } = require('./http/middlewares/client');
 // hiii
 module.exports = class Application {
     #app = express();
@@ -17,8 +24,10 @@ module.exports = class Application {
         this.#PORT = PORT;
         this.#DB_URL = DB_URL;
         this.configApplication();
+        this.initTemplateEngine();
         this.createServer(PORT);
         this.connectToMongoDB(DB_URL);
+        this.initCookieSession();
         this.createRoutes();
         this.errorHandller()
     }
@@ -87,10 +96,24 @@ module.exports = class Application {
             apis: ['./app/router/**/*.js']
         }), { explorer: true }))
     }
-
+    initTemplateEngine() {
+        this.#app.use(expressEjsLayouts);
+        this.#app.set("view engine", "ejs");
+        this.#app.set("views", "resource/views");
+        this.#app.set("layout extractStyles", true);
+        this.#app.set("layout extractScripts", true);
+        this.#app.set("layout", "./layouts/index");
+        this.#app.use((req, res, next) => {
+            this.#app.locals = cookieHelper(req, res);
+            next();
+        })
+    }
     createServer() {
         const http = require('http');
-        http.createServer(this.#app).listen(this.#PORT, () => {
+        const server = http.createServer(this.#app);
+        const io = initialaysSocket(server);
+        socketHandler(io)
+        server.listen(this.#PORT, () => {
             console.log(`run > http://localhost:${this.#PORT}`);
         })
 
@@ -112,6 +135,19 @@ module.exports = class Application {
             await mongoose.connection.close();
             process.exit(0);
         });
+    }
+
+    initCookieSession() {
+
+        this.#app.use(cookieParser(COOKIE_PARSER_SECET_KEY));
+        this.#app.use(session({
+            secret: COOKIE_PARSER_SECET_KEY,
+            saveUninitialized: true,
+            resave: true,
+            cookie: {
+                secure: true
+            }
+        }))
     }
 
     createRoutes() {

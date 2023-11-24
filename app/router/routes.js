@@ -9,6 +9,7 @@ const { authRouter } = require('./user/auth');
 const { graphqlConfig } = require('../utils/graphql.config');
 const { graphqlSchema } = require('../graphQL/index.resolver');
 const { paymentApi } = require('./api/payment');
+const { chatSoppurtRputes } = require('./suppurt/suppurt');
 
 const router = require('express').Router();
 
@@ -25,6 +26,7 @@ router.use('/graphql', graphqlHTTP(graphqlConfig))
 // }))
 router.use('/developer', developerRoutes);
 router.use('/admin', verifyAccessToken, checkPermissions(["user"]), categoryAdminRoutes);
+router.use('/support', chatSoppurtRputes);
 router.use('/user', authRouter);
 router.use("/payment", paymentApi)
 

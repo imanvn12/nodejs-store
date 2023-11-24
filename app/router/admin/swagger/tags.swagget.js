@@ -1,6 +1,10 @@
 /**
  * @swagger
  *  tags:
+ *      -   name: namespace
+ *          description: everything about the namespaces
+ *      -   name: room
+ *          description: everything about the rooms
  *      -   name: RBAC(admin-panel)
  *          description: admin panel for searching users
  *      -   name: user(admin-panel)
